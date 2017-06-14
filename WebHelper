@@ -1,0 +1,9 @@
+'This makes request to a sURL and if successful brings back page contents
+Function getPageCode(sURL As String)
+    With CreateObject("MSXML2.XMLHTTP")
+        .Open "GET", sURL, False
+        .setRequestHeader "User-Agent", "Chrome"
+        .send
+        getPageCode = .responseText
+    End With
+End Function
