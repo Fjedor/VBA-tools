@@ -1,5 +1,4 @@
 'Hereafter no error handling is provided. If file proves successfull I will make amendments to address that matter.
-'If you find that the attribution is missing or something else needs to be done to make it fair, please drop me a line.
 
 'This makes a "GET" request to a sURL and if successful brings back page contents
 Function getPageCode(sURL As String)
