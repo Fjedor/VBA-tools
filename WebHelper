@@ -1,4 +1,5 @@
 'Hereafter no error handling is provided. If file proves successfull I will make amendments to address that matter.
+'If you find that the attribution is missing or something else needs to be done to make it fair, please drop me a line.
 
 'This makes a "GET" request to a sURL and if successful brings back page contents
 Function getPageCode(sURL As String)
@@ -18,5 +19,36 @@ Function getPageCodePost(sURL As String, Optional sPayload As String)
         .setRequestHeader "Content-Type", "application/x-www-form-urlencoded; charset=UTF-8"
         .send sPayload
         getPageCodePost = .responseText
+    End With
+End Function
+
+'This uses WinHTTP to make the same "get" request as started on the 4th line
+Function getPageCodeWHR(sURL As String)
+    With CreateObject("WinHttp.WinHttpRequest.5.1")
+        .Open "GET", sURL        
+        .send
+        getPageCodeWHR = .responseText
+    End With
+End Function
+
+'This brings back the HTML object that can later be parsed.
+'I would rather use this if i need some dirty parsing to do, otherwise not recommended.
+Function getHTML(sURL As String)
+    Dim HTML As Object
+    Set HTML = CreateObject("HTMLfile")
+    HTML.body.innerHTML = getPageCode(sURL)
+    Set getHTML = HTML
+End Function
+
+'Have never used this - don't really need. This launches IE instance that then opens sLink
+Function getIECode(sLink As String)
+    With CreateObject("InternetExplorer.Application")
+        .Visible = True
+        .Navigate sLink
+        
+        Do While .Busy: DoEvents: Loop
+        
+        getIECode = ie.Document.body.innerHTML
+        .Quit
     End With
 End Function
