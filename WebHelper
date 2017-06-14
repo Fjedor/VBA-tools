@@ -1,9 +1,22 @@
-'This makes request to a sURL and if successful brings back page contents
+'Hereafter no error handling is provided. If file proves successfull I will make amendments to address that matter.
+
+'This makes a "GET" request to a sURL and if successful brings back page contents
 Function getPageCode(sURL As String)
     With CreateObject("MSXML2.XMLHTTP")
         .Open "GET", sURL, False
         .setRequestHeader "User-Agent", "Chrome"
         .send
         getPageCode = .responseText
+    End With
+End Function
+
+'This makes a "POST" request to a sURL with sPayload, if successfull brings back page contents
+Function getPageCodePost(sURL As String, Optional sPayload As String)
+    With CreateObject("MSXML2.XMLHTTP")
+        .Open "POST", sURL, False
+        .setRequestHeader "User-Agent", "Chrome"
+        .setRequestHeader "Content-Type", "application/x-www-form-urlencoded; charset=UTF-8"
+        .send sPayload
+        getPageCodePost = .responseText
     End With
 End Function
