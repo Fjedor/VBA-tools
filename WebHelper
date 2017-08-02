@@ -51,3 +51,25 @@ Function getIECode(sLink As String)
         .Quit
     End With
 End Function
+
+'This is an example of XHR in action. Parses current rate for given @fx pair and @dt date (the latter defaults to today's date)
+'form Central Bank of Russia site using their API
+Function getForexRate(Optional fx = "USD", Optional dt = Nothing)
+    Dim s
+    Dim whereEnds
+    Dim where
+    Dim xhr As Object
+    
+    Set xhr = CreateObject("MSXML2.XMLHTTP")
+    If dt Is Nothing Then dt = Date
+    With xhr
+        .Open "GET", "http://www.cbr.ru/scripts/XML_daily.asp?date_req=" & Format(dt, "dd/mm/yyyy")
+        .send
+        s = .responseText
+    End With
+    where = InStr(1, s, fx)
+    where = InStr(where, s, "<Value>") + 7
+    whereEnds = InStr(where, s, "</Value>")
+    getForexRate = Val(Replace(Mid(s, where, whereEnds - where), ",", "."))
+    
+End Function
