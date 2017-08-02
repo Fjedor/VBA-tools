@@ -53,7 +53,7 @@ Function getIECode(sLink As String)
 End Function
 
 'This is an example of XHR in action. Parses current rate for given @fx pair and @dt date (the latter defaults to today's date)
-'form Central Bank of Russia site using their API
+'from the site of Central Bank of Russia using their API
 Function getForexRate(Optional fx = "USD", Optional dt = Nothing)
     Dim s
     Dim whereEnds
